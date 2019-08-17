@@ -12,7 +12,7 @@
 		"clean": "rm -rf build && mkdir build",
 		"build-server": "babel -d ./build ./server -s",
 		"build": "yarn clean && yarn build-server",
-		"start": "yarn build && babel-node ./build/server.js",
+		"start": "yarn build && node ./build/server.js",
 		"heroku-postbuild": "YARN_CONFIG_PRODUCTION=false yarn build:prod"
 	},
 	"dependencies": {
