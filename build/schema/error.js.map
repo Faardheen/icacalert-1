@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../server/schema/error.js"],"names":["gql"],"mappings":";;;;;;;;;;;AAAA;;;;;;;;;;;;mBAEeA,wB","sourcesContent":["import { gql } from 'apollo-server-express';\n\nexport default gql`\n\ttype Error {\n\t\tpath: String\n\t\tmessage: String\n\t}\n`;\n"],"file":"error.js"}
