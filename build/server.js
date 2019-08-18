@@ -35,9 +35,12 @@ var startServer = function startServer() {
   var app = (0, _express["default"])();
   app.use((0, _cors["default"])('*'));
   app.use(_express["default"]["static"]('dist'));
-  app.get('*', function (req, res) {
-    res.sendFile(_path["default"].resolve('dist', 'index.html'));
-  });
+
+  if (process.env.NODE_ENV === 'production') {
+    app.get('*', function (req, res) {
+      res.sendFile(_path["default"].resolve('dist', 'index.html'));
+    });
+  }
 
   var addUser =
   /*#__PURE__*/

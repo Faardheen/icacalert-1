@@ -1,6 +1,6 @@
-export const showErr = (ok, path, message) => {
+exports.showErr = (ok, path, message) => {
 	return {
 		ok: ok,
-		errors: { path: path, message: message },
+		errors: { path: path, message: message }
 	};
 };

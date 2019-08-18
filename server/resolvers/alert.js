@@ -5,10 +5,14 @@ import { ALERT_ERR } from "../constants";
 import { districtNameFormatter } from "../utils/districtNameFormatter";
 import { typeFormatter } from "../utils/typeFormatter";
 import axios from 'axios';
-
+import { getAverage } from '../utils/getAverage';
 
 export default {
 	Query: {
+		getAverage: async (_, { districtName }) => {
+			const alerts = await Alert.find({ geo: districtNameFormatter(districtName) })
+			return getAverage(alerts)
+		},
 		allAlerts: async () => {
 			try {
 				const alerts = await Alert.find({}).populate("user")
@@ -39,7 +43,7 @@ export default {
 			const geoUrl = `http://www.geoplugin.net/extras/location.gp?lat=${lat}&lon=${long}&format=json`
 			const res = await axios.get(geoUrl)
 			try {
-				const alert = await new Alert({ type, description, lat, long, geo: res.data.geoplugin_region })
+				const alert = await new Alert({ type, description, lat, long, geo: res.data.geoplugin_region, place: res.data.geoplugin_place })
 				if (user) {
 					const currentUser = await User.findById(user.id)
 					alert.user = currentUser

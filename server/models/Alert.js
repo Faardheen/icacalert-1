@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import moment from 'moment';
 
 const AlertSchema = new Schema({
 	type: {
@@ -24,13 +25,25 @@ const AlertSchema = new Schema({
 		default: 0
 	},
 	timeStamp: {
-		type: Date,
-		default: new Date().getTime()
+		type: String,
+		default: () => moment().format('MMMM Do HH:mm')
+	},
+	h: {
+		type: String,
+		default: () => moment().format('HH')
+	},
+	m: {
+		type: String,
+		default: () => moment().format('mm')
 	},
 	geo: {
 		type: String,
 		default: 'Port-Louis',
 		required: false
+	},
+	place: {
+		type: String,
+		required: false,
 	}
 });
 

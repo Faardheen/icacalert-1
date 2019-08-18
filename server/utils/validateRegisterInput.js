@@ -1,30 +1,40 @@
-const Validator = require('validator');
-const isEmpty = require('is-empty');
-
 export default data => {
 	let errors = {};
+	let isValid = true;
+	const { email, password, phone } = data;
 
-	data.email = !isEmpty(data.email) ? data.email : '';
-	data.password = !isEmpty(data.password) ? data.password : '';
-	data.phone = !isEmpty(data.phone) ? data.phone : '';
+	let x = email.split('@')
+	let y = email.split('.')
 
-	if (Validator.isEmpty(data.email)) {
-		errors.email = 'Email field is required';
-	} else if (!Validator.isEmail(data.email)) {
-		errors.email = 'Email address is invalid';
+	if (!email) {
+		errors.email = 'Enter your email address';
+		isValid = false;
+	} else {
+		if (x.length > 2 || y.length > 2 || x.length == 1) {
+			errors.email = 'Invalid email address';
+			isValid = false;
+		}
 	}
 
-	if (Validator.isEmpty(data.password)) {
-		errors.password = 'Password field is required';
+	if (!password) {
+		errors.password = 'Enter a password';
+		isValid = false;
+	} else {
+		if (password.length < 3) {
+			errors.password = 'Password should contain at least 3 characters';
+			isValid = false;
+		}
 	}
 
-	if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
-		errors.password = 'Password must be at least 6 characters';
+	if (!phone) {
+		errors.email = 'Enter your phone number';
+		isValid = false;
+	} else {
+		if (phone.length != 8 || phone.substring(0, 1) != "5") {
+			errors.phone = 'Invalid phone number';
+			isValid = false;
+		}
 	}
 
-	if (Validator.isEmpty(data.phone)) {
-		errors.phone = 'Invalid phone number format. Make sure you include +230';
-	}
-
-	return { errors, isValid: isEmpty(errors) };
+	return { errors, isValid };
 };

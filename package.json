@@ -40,6 +40,7 @@
 		"leaflet-control-geocoder": "^1.8.3",
 		"lodash": "^4.17.15",
 		"merge-graphql-schemas": "^1.7.0",
+		"moment": "^2.24.0",
 		"mongoose": "^5.6.7",
 		"react": "^16.8.6",
 		"react-apollo": "^2.5.8",

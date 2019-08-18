@@ -38,7 +38,7 @@ export default () => (
         <a href='/plaines+wilhems'><h3 className='district-header'>Plaines Wilhems</h3></a>
       </DistrictListItem>
       <DistrictListItem>
-        <a href='/riviere+noire'><h3 className='district-header'>Riviere Noire</h3></a>
+        <a href='/black+river'><h3 className='district-header'>Black River</h3></a>
       </DistrictListItem>
       <DistrictListItem>
         <a href='/flacq'><h3 className='district-header'>Flacq</h3></a>

@@ -33,7 +33,7 @@ var _default = function _default(data) {
   }
 
   if (Validator.isEmpty(data.phone)) {
-    errors.phone = 'Invalid phone number format. Make sure you include +230';
+    errors.phone = 'Please include your phone number';
   }
 
   return {

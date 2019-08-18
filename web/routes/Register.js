@@ -10,6 +10,7 @@ import {
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import WrappedContent from '../components/WrappedContent';
+import { SyncLoader } from 'react-spinners';
 
 class Register extends React.Component {
 	constructor(props) {
@@ -19,6 +20,7 @@ class Register extends React.Component {
 			phone: '',
 			password: '',
 			err: '',
+			loading: false
 		};
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
@@ -29,6 +31,8 @@ class Register extends React.Component {
 		const response = await this.props.mutate({
 			variables: { email, password, phone },
 		});
+
+		this.setState({ loading: true })
 
 		const { ok, errors } = response.data.register;
 
@@ -43,11 +47,11 @@ class Register extends React.Component {
 	}
 
 	onChange(e) {
-		this.setState({ [e.target.name]: e.target.value });
+		this.setState({ [e.target.name]: e.target.value, loading: false });
 	}
 
 	render() {
-		const { phone, email, password, err } = this.state;
+		const { phone, email, password, err, loading } = this.state;
 
 		const errList = [];
 
@@ -88,9 +92,7 @@ class Register extends React.Component {
 								value={password}
 							/>
 						</Form.Field>
-						<Button type='button' primary onClick={this.onSubmit}>
-							Submit
-					</Button>
+						<Button disabled={loading} type='button' primary onClick={this.onSubmit}> Submit </Button>
 					</Form>
 					{errList.length ? (
 						<Message

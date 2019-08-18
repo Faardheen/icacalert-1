@@ -20,7 +20,7 @@ var UserSchema = new _mongoose.Schema({
   },
   phone: {
     type: String,
-    match: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im
+    required: true
   },
   alerts: [{
     type: _mongoose.Schema.Types.ObjectId,

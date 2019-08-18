@@ -12,6 +12,7 @@ import { Dropdown } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 import { DEF_1 } from '../../server/constants';
 import styled from 'styled-components';
+import WrappedContent from '../components/WrappedContent';
 
 const CorruptionTypeDefinition = styled.p`
 	font-size: 20px;
@@ -67,6 +68,7 @@ class CreateAlert extends React.Component {
 			err: '',
 			lat: 0,
 			long: 0,
+			loading: false
 		};
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
@@ -76,6 +78,8 @@ class CreateAlert extends React.Component {
 	async onSubmit() {
 		const { value, description, lat, long } = this.state;
 		const currentOption = await options.find(o => o.value === value).text;
+
+		this.setState({ loading: true })
 
 		const response = await this.props.mutate({
 			variables: { type: currentOption, description, lat, long },
@@ -102,7 +106,7 @@ class CreateAlert extends React.Component {
 	}
 
 	render() {
-		const { value, description, err } = this.state;
+		const { value, description, err, loading } = this.state;
 		const currentOption = options.find(o => o.value === value);
 		const currentDefinition = definitions.find(d => d.value === value)
 		const errList = [];
@@ -112,41 +116,43 @@ class CreateAlert extends React.Component {
 		}
 
 		return (
-			<Container text>
-				<Form>
-					<Header as='h2'>Create Alert</Header>
-					<Form.Field>
-						<Dropdown
-							onChange={this.handleChange}
-							options={options}
-							placeholder='Type of Corruption'
-							selection
-							value={value}
-						/>
-					</Form.Field>
-					<Form.Field>
-						<Input
-							name='description'
-							onChange={this.onChange}
-							placeholder='Give us some details'
-							fluid
-							value={description}
-						/>
-					</Form.Field>
-					<Header as='h4'>Selected Type: {currentOption.text}</Header>
-					<CorruptionTypeDefinition>{currentDefinition.definition}</CorruptionTypeDefinition>
-					<Button type='button' primary onClick={this.onSubmit}>
-						Submit
+			<WrappedContent>
+				<Container text>
+					<Form>
+						<Header as='h2'>Create Alert</Header>
+						<Form.Field>
+							<Dropdown
+								onChange={this.handleChange}
+								options={options}
+								placeholder='Type of Corruption'
+								selection
+								value={value}
+							/>
+						</Form.Field>
+						<Form.Field>
+							<Input
+								name='description'
+								onChange={this.onChange}
+								placeholder='Give us some details'
+								fluid
+								value={description}
+							/>
+						</Form.Field>
+						<Header as='h4'>Selected Type: {currentOption.text}</Header>
+						<CorruptionTypeDefinition>{currentDefinition.definition}</CorruptionTypeDefinition>
+						<Button disabled={loading} type='button' primary onClick={this.onSubmit}>
+							Submit
 					</Button>
-				</Form>
-				{errList.length ? (
-					<Message
-						error
-						header='There was some errors with your submission'
-						list={errList}
-					/>
-				) : null}
-			</Container>
+					</Form>
+					{errList.length ? (
+						<Message
+							error
+							header='There was some errors with your submission'
+							list={errList}
+						/>
+					) : null}
+				</Container>
+			</WrappedContent>
 		);
 	}
 }

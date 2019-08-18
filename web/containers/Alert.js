@@ -18,7 +18,7 @@ export default ({ alerts: { loading, alerts } }) => (
                 <Card >
                   <Card.Content className='card-content'>
                     <Header as='h5'>{a.type}</Header>
-                    <Card.Meta><Icon disabled name='clock outline' />&ensp;{(new Date(1000 * a.timeStamp)).toDateString()}</Card.Meta>
+                    <Card.Meta><Icon disabled name='clock outline' />&ensp;{a.timeStamp}</Card.Meta>
                     <Card.Meta><Icon disabled name='envelope open outline' />&ensp;{a.user.email}</Card.Meta>
                     <Card.Meta><Icon disabled name='map outline' />&ensp;{a.geo}</Card.Meta>
                   </Card.Content>

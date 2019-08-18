@@ -1,16 +1,12 @@
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { fileLoader, mergeTypes, mergeResolvers } from 'merge-graphql-schemas';
-import { db, port } from './bin/config.js';
+import { db, port, SECRET, SECRET2 } from './bin/config.js';
 import path from 'path';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import { refreshTokens } from './utils/auth.js';
 import jwt from 'jsonwebtoken';
-require('dotenv').config();
-
-const SECRET = process.env.SECRET;
-const SECRET2 = process.env.SECRET2;
 
 const typeDefs = mergeTypes(fileLoader(path.join(__dirname, './schema')));
 const resolvers = mergeResolvers(
@@ -23,9 +19,11 @@ const startServer = () => {
 	app.use(cors('*'));
 
 	app.use(express.static('dist'));
-	app.get('*', (req, res) => {
-		res.sendFile(path.resolve('dist', 'index.html'));
-	})
+	if (process.env.NODE_ENV === 'production') {
+		app.get('*', (req, res) => {
+			res.sendFile(path.resolve('dist', 'index.html'));
+		})
+	}
 
 	const addUser = async (req, res, next) => {
 		const token = req.headers['x-token'];

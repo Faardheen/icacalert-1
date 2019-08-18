@@ -28,7 +28,7 @@ const AlertList = ({ data: { loading, alerts }, districtName }) => (
               </Modal>
             </List.Content>
             <List.Content className='list-content'>
-              <a href={`/alert/${districtNameFormatter(a.geo)}`}><List.Header as='h5'>{a.geo}</List.Header></a>
+              <a href={`/alert/${districtNameFormatter(a.geo)}`}><List.Header as='h5'>{a.place}</List.Header></a>
               <a href={`/alert/${districtNameFormatter(a.geo)}/${typeFormatter(a.type)}`}><List.Description>{a.type}</List.Description></a>
             </List.Content>
           </List.Item>
@@ -46,6 +46,7 @@ const alertsQuery = gql`
       description
       timeStamp
       geo
+      place
       user {
         email
         phone
